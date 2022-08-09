@@ -1,0 +1,28 @@
+{
+  "name": "fsohy9",
+  "version": "1.0.0",
+  "description": "Fullstackopen.com part 9 exercises",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node",
+    "calculateBmi": "npm run ts-node -- bmiCalculator.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuukkalai/fsohy9.git"
+  },
+  "keywords": [
+    "fullstackopen"
+  ],
+  "author": "Tuukka Laitinen",
+  "license": "CC-BY-NC-SA-3.0",
+  "bugs": {
+    "url": "https://github.com/tuukkalai/fsohy9/issues"
+  },
+  "homepage": "https://github.com/tuukkalai/fsohy9#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  }
+}
