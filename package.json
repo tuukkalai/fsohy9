@@ -9,7 +9,8 @@
     "calculateBmi": "npm run ts-node -- src/bmiCalculator.ts",
     "calculateExercises": "npm run ts-node -- src/exerciseCalculator.ts",
     "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "ts-node-dev src/index.ts",
+    "lint": "eslint --ext .ts ."
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,9 @@
   "homepage": "https://github.com/tuukkalai/fsohy9#readme",
   "devDependencies": {
     "@types/express": "^4.17.15",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
     "express": "^4.18.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",

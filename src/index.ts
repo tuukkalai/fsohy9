@@ -11,11 +11,9 @@ app.get('/bmi', (req, res) => {
   if (!req.query.weight) throw new Error("Parameter 'weight' is missing");
   if (!req.query.height) throw new Error("Parameter 'height' is missing");
 
-  if (!isNaN(Number(req.query.weight)) && !isNaN(Number(req.query.height))) {
-    res.send(calculateBmi(Number(req.query.height), Number(req.query.weight)));
-  } else {
-    throw new Error("Provided values were not numbers")
-  }
+  if (isNaN(Number(req.query.weight)) || isNaN(Number(req.query.height))) throw new Error("Provided values were not numbers");
+
+  res.send(calculateBmi(Number(req.query.height), Number(req.query.weight)));
 });
 
 const PORT = 3002;
