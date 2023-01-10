@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts-node": "ts-node",
     "calculateBmi": "npm run ts-node -- src/bmiCalculator.ts",
-    "calculateExercises": "npm run ts-node -- src/exerciseCalculator.ts"
+    "calculateExercises": "npm run ts-node -- src/exerciseCalculator.ts",
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node-dev src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,10 @@
   },
   "homepage": "https://github.com/tuukkalai/fsohy9#readme",
   "devDependencies": {
+    "@types/express": "^4.17.15",
+    "express": "^4.18.2",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.4"
   }
 }
