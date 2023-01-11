@@ -30,7 +30,7 @@ const calculateExercises = (argv: Array<string>): Result => {
 };
 
 const parseArgs = (input: Array<string>): TrainingData => {
-  input = input.splice(2);
+  if (input[0].indexOf('ts-node') > -1) input = input.splice(2);
   if (isNaN(Number(input[0]))) throw new Error("Value for target is not a number");
   const target = Number(input.shift());
   const trainingDetails: Array<number> = [];
@@ -44,8 +44,10 @@ const parseArgs = (input: Array<string>): TrainingData => {
   };
 };
 
-if (process.argv.length > 4) {
-  console.log(calculateExercises(process.argv));
-} else {
-  throw new Error("Too few arguments");
-}
+// if (process.argv.length > 4) {
+//   console.log(calculateExercises(process.argv));
+// } else {
+//   throw new Error("Too few arguments");
+// }
+
+export default calculateExercises;

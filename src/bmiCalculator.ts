@@ -22,3 +22,5 @@ export const calculateBmi = (height: number, weight: number): string => {
 if (process.argv.length > 2) {
 	console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])));
 }
+
+export default calculateBmi;
