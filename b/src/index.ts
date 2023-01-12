@@ -28,8 +28,7 @@ app.post('/exercises', (req, res) => {
   if ( !daily_exercises || !target ) {
     return res.status(400).json({ error: 'Training details or target missing.'});
   }
-  daily_exercises.splice(0,0,target);
-  const result = calculateExercises(daily_exercises);
+  const result = calculateExercises([target, ...daily_exercises]);
   return res.send(result);
 });
 

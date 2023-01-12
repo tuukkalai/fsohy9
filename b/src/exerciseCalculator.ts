@@ -14,7 +14,6 @@ interface TrainingData {
 }
 
 const calculateExercises = (argv: Array<number>): Result => {
-  console.log(argv);
   const { trainingDetails, target } = parseArgs(argv);
   const trainingDays: number = trainingDetails.filter(dailyHours => dailyHours > 0).length;
   const average: number = trainingDetails.reduce((p, c) => p + c / trainingDetails.length, 0);
@@ -44,7 +43,7 @@ const parseArgs = (input: Array<number>): TrainingData => {
 };
 
 if (process.argv[0].indexOf("ts-node") > -1) {
-  if (process.argv.length > 4) throw new Error("Too few arguments");
+  if (process.argv.length < 4) throw new Error("Too few arguments");
   const args = process.argv.slice(2);
   const input: Array<number> = [];
   args.forEach(e => {
@@ -55,6 +54,6 @@ if (process.argv[0].indexOf("ts-node") > -1) {
     }
   });
   console.log(calculateExercises(input));
-};
+}
 
 export default calculateExercises;
