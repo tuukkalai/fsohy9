@@ -3,11 +3,12 @@ import calculateBmi from './bmiCalculator';
 import calculateExercises from './exerciseCalculator';
 
 interface ExerciseCalculatorPost {
-  trainingDetails: Array<string>;
-  target: string;
+  daily_exercises: Array<number>;
+  target: number;
 }
 
 const app = express();
+app.use(express.json());
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
@@ -23,11 +24,12 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/exercises', (req, res) => {
-  const { trainingDetails, target } = req.body as ExerciseCalculatorPost;
-  if ( !trainingDetails || !target ) {
+  const { daily_exercises, target } = req.body as ExerciseCalculatorPost;
+  if ( !daily_exercises || !target ) {
     return res.status(400).json({ error: 'Training details or target missing.'});
   }
-  const result = calculateExercises(trainingDetails.unshift(target.toString()));
+  daily_exercises.splice(0,0,target);
+  const result = calculateExercises(daily_exercises);
   return res.send(result);
 });
 

@@ -13,7 +13,8 @@ interface TrainingData {
   target: number;
 }
 
-const calculateExercises = (argv: Array<string>): Result => {
+const calculateExercises = (argv: Array<number>): Result => {
+  console.log(argv);
   const { trainingDetails, target } = parseArgs(argv);
   const trainingDays: number = trainingDetails.filter(dailyHours => dailyHours > 0).length;
   const average: number = trainingDetails.reduce((p, c) => p + c / trainingDetails.length, 0);
@@ -29,9 +30,7 @@ const calculateExercises = (argv: Array<string>): Result => {
   };
 };
 
-const parseArgs = (input: Array<string>): TrainingData => {
-  if (input[0].indexOf('ts-node') > -1) input = input.splice(2);
-  if (isNaN(Number(input[0]))) throw new Error("Value for target is not a number");
+const parseArgs = (input: Array<number>): TrainingData => {
   const target = Number(input.shift());
   const trainingDetails: Array<number> = [];
   input.forEach(n => {
@@ -44,10 +43,18 @@ const parseArgs = (input: Array<string>): TrainingData => {
   };
 };
 
-// if (process.argv.length > 4) {
-//   console.log(calculateExercises(process.argv));
-// } else {
-//   throw new Error("Too few arguments");
-// }
+if (process.argv[0].indexOf("ts-node") > -1) {
+  if (process.argv.length > 4) throw new Error("Too few arguments");
+  const args = process.argv.slice(2);
+  const input: Array<number> = [];
+  args.forEach(e => {
+    if (!isNaN(Number(e))) {
+      input.push(Number(e));
+    } else {
+      throw new Error("Value for target or exercise details was not number!");
+    }
+  });
+  console.log(calculateExercises(input));
+};
 
 export default calculateExercises;
