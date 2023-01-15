@@ -35,7 +35,7 @@ interface CourseSpecialPart extends CoursePartBase {
 }
 
 export type CoursePart = 
-  CourseNormalPart | 
-  CourseProjectPart | 
-  CourseSubmissionPart | 
-  CourseSpecialPart;
+  | CourseNormalPart
+  | CourseProjectPart
+  | CourseSubmissionPart
+  | CourseSpecialPart;
