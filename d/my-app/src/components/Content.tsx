@@ -1,7 +1,4 @@
-interface CourseProps {
-	name: string;
-  exerciseCount: number;
-}
+import { CourseParts, CourseProps } from "../types";
 
 const Course = (props: CourseProps) => (
   <p>
@@ -9,11 +6,7 @@ const Course = (props: CourseProps) => (
   </p>
 );
 
-interface ContentProps {
-  courseParts: Array<CourseProps>;
-}
-
-const Content = (props: ContentProps) => {
+const Content = (props: CourseParts) => {
   const courses = props.courseParts;
   return (
     <div>
