@@ -11,28 +11,28 @@ const assertNever = (value: never): never => {
   );
 }
 
-const Course = ({key, course}: CourseProps) => {
-  switch (course.type) {
-    case "normal":
+const Part = ({key, course}: CourseProps) => {
+  switch (course.kind) {
+    case "basic":
       return (
         <div key={key}>
           <p><b>{course.name} {course.exerciseCount}</b></p>
           <p><i>{course.description}</i></p>
         </div>
       );
-    case "groupProject":
+    case "group":
       return (
         <div key={key}>
           <p><b>{course.name} {course.exerciseCount}</b></p>
           <p>Project exercises {course.groupProjectCount}</p>
         </div>
       );
-    case "submission":
+    case "background":
       return (
         <div key={key}>
           <p><b>{course.name} {course.exerciseCount}</b></p>
           <p><i>{course.description}</i></p>
-          <p>Submit to {course.exerciseSubmissionLink}</p>
+          <p>Submit to {course.backgroundMaterial}</p>
         </div>
       );
     case "special":
@@ -48,4 +48,4 @@ const Course = ({key, course}: CourseProps) => {
   }
 };
 
-export default Course;
+export default Part;

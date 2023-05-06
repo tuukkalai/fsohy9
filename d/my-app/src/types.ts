@@ -2,40 +2,62 @@ export interface HeaderProps {
   courseName: string;
 }
 
+interface CoursePartBase {
+  name: string;
+  exerciseCount: number;
+}
+
+interface CourseWithDescription extends CoursePartBase {
+  description: string;
+}
+
+interface CoursePartBasic extends CourseWithDescription {
+  kind: "basic"
+}
+
+interface CoursePartGroup extends CoursePartBase {
+  groupProjectCount: number;
+  kind: "group"
+}
+
+interface CoursePartBackground extends CourseWithDescription {
+  backgroundMaterial: string;
+  kind: "background"
+}
+
 export interface CourseParts {
   courseParts: Array<CoursePart>;
 }
 
-interface CoursePartBase {
-  name: string;
-  exerciseCount: number;
-  type: string;
-}
+// interface CoursePartBase {
+//   name: string;
+//   exerciseCount: number;
+//   type: string;
+// }
 
-interface CourseNormalPart extends CoursePartBase {
-  type: "normal";
-  description: string;
-}
+// interface CourseNormalPart extends CoursePartBase {
+//   type: "normal";
+//   description: string;
+// }
 
-interface CourseProjectPart extends CoursePartBase {
-  type: "groupProject";
-  groupProjectCount: number;
-}
+// interface CourseProjectPart extends CoursePartBase {
+//   type: "groupProject";
+//   groupProjectCount: number;
+// }
 
-interface CourseSubmissionPart extends CoursePartBase {
-  type: "submission";
-  description: string;
-  exerciseSubmissionLink: string;
-}
+// interface CourseSubmissionPart extends CoursePartBase {
+//   type: "submission";
+//   description: string;
+//   exerciseSubmissionLink: string;
+// }
 
-interface CourseSpecialPart extends CoursePartBase {
-  type: "special";
-  description: string;
+interface CourseSpecialPart extends CourseWithDescription {
+  kind: "special";
   requirements: Array<string>;
 }
 
 export type CoursePart = 
-  | CourseNormalPart
-  | CourseProjectPart
-  | CourseSubmissionPart
+  | CoursePartBasic
+  | CoursePartGroup
+  | CoursePartBackground
   | CourseSpecialPart;
