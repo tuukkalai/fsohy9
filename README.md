@@ -1,6 +1,6 @@
-# Fullstack Open 2022 - Part 9
+# Fullstack Open - Part 9
 
-Part 9 exercises of [Fullstack Open 2022](https://fullstackopen.com/) -course.
+Part 9 exercises of [Fullstack Open](https://fullstackopen.com/) -course.
 
 ---
 
