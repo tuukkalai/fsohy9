@@ -10,26 +10,26 @@ const App = () => {
       name: "Fundamentals",
       exerciseCount: 10,
       description: "This is an awesome course part",
-      kind: "basic"
+      kind: "basic",
     },
     {
       name: "Using props to pass data",
       exerciseCount: 7,
       groupProjectCount: 3,
-      kind: "group"
+      kind: "group",
     },
     {
       name: "Basics of type Narrowing",
       exerciseCount: 7,
       description: "How to go from unknown to string",
-      kind: "basic"
+      kind: "basic",
     },
     {
       name: "Deeper type usage",
       exerciseCount: 14,
       description: "Confusing description",
       backgroundMaterial: "https://type-level-typescript.com/template-literal-types",
-      kind: "background"
+      kind: "background",
     },
     {
       name: "TypeScript in frontend",
@@ -42,44 +42,9 @@ const App = () => {
       exerciseCount: 21,
       description: "Typing the backend",
       requirements: ["nodejs", "jest"],
-      kind: "special"
-    }
+      kind: "special",
+    },
   ];
-
-  // const courseParts: CoursePart[] = [
-  //   {
-  //     name: "Fundamentals",
-  //     exerciseCount: 10,
-  //     description: "This is the easy course part",
-  //     type: "normal"
-  //   },
-  //   {
-  //     name: "Advanced",
-  //     exerciseCount: 7,
-  //     description: "This is the hard course part",
-  //     type: "normal"
-  //   },
-  //   {
-  //     name: "Using props to pass data",
-  //     exerciseCount: 7,
-  //     groupProjectCount: 3,
-  //     type: "groupProject"
-  //   },
-  //   {
-  //     name: "Deeper type usage",
-  //     exerciseCount: 14,
-  //     description: "Confusing description",
-  //     exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
-  //     type: "submission"
-  //   },
-  //   {
-  //     name: "Backend development",
-  //     exerciseCount: 21,
-  //     description: "Typing the backend",
-  //     requirements: ["nodejs", "jest"],
-  //     type: "special"
-  //   }
-  // ];
 
   return (
     <div>
