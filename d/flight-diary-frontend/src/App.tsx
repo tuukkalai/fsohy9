@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import { DiaryEntry } from './types';
 
-function App() {
+const App = () => {
+  const [entries, setEntries] = useState<DiaryEntry[]>([]);
+  useEffect(() => {
+    axios.get<DiaryEntry[]>('http://localhost:3000/api/diaries').then(response => {
+      setEntries(response.data);
+    })
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Ilari's fligh diary application</h1>
+      <h2>Entries</h2>
+      {entries.map(e => 
+        <div key={e.id}>
+          <h3>{e.date}</h3>
+          <ul>
+            <li>Visibility: {e.visibility}</li>
+            <li>Weather: {e.weather}</li>
+            {e.comment &&
+              <li>Comment: {e.comment}</li>
+            }
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
