@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import { DiaryEntry, NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
+import { Weather, Visibility, DiaryEntry, NonSensitiveDiaryEntry } from "./types";
 
 const App = () => {
   const [entries, setEntries] = useState<NonSensitiveDiaryEntry[]>([]);
@@ -25,6 +25,13 @@ const App = () => {
       .post<NonSensitiveDiaryEntry>("http://localhost:3000/api/diaries", newEntry)
       .then((res) => {
         setEntries(entries.concat(res.data));
+        // Leaving the radio inputs as is.
+        // Firefox does not remove the ticks when controlling value with state.
+        setNewEntry({
+          ...newEntry,
+          date: "",
+          comment: "",
+        });
       })
       .catch((error) => {
         setErrorMessage(error.response.data);
@@ -42,31 +49,36 @@ const App = () => {
       <h2>Add new entry</h2>
       {errorMessage && <div style={{ color: "#e22" }}>{errorMessage}</div>}
       <form onSubmit={createEntry}>
-        <label htmlFor="date">Date</label>
+        Date
         <input
-          type="text"
+          type="date"
           name="date"
           value={newEntry.date}
           onChange={handleInputChange}
         />
         <br />
-        <label htmlFor="visibility">Visibility</label>
-        <input
-          type="text"
-          name="visibility"
-          value={newEntry.visibility}
-          onChange={handleInputChange}
-        />
+        Visibility
+        {Object.values(Visibility).map((v) => (
+          <div key={v}>
+            <input
+              type="radio"
+              name="visibility"
+              value={v}
+              onChange={handleInputChange}
+            />
+            {v}
+          </div>
+        ))}
         <br />
-        <label htmlFor="weather">Weather</label>
-        <input
-          type="text"
-          name="weather"
-          value={newEntry.weather}
-          onChange={handleInputChange}
-        />
+        Weather
+        {Object.values(Weather).map((w) => (
+          <div key={w}>
+            <input type="radio" name="weather" value={w} onChange={handleInputChange} />
+            {w}
+          </div>
+        ))}
         <br />
-        <label htmlFor="comment">Comment</label>
+        Comment
         <input
           type="text"
           name="comment"
