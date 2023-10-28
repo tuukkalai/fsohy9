@@ -5,6 +5,7 @@ import { Gender, Patient } from "../../types";
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import axios from "axios";
+import { Divider, List, ListItemText, Typography } from "@mui/material";
 
 const PatientPage: React.FC = () => {
   const [patient, setPatient] = useState<Patient>();
@@ -40,11 +41,31 @@ const PatientPage: React.FC = () => {
     <div>
       {patient && (
         <>
-          <h1>{patient.name}{` `}{patient.gender !== Gender.Other && <GenderIcon />}</h1>
-          <p>SSN: {patient.ssn}<br />Occupation: {patient.occupation}</p>
+          <Typography variant="h4" style={{ marginTop: "1em" }}>{patient.name}{` `}{patient.gender !== Gender.Other && <GenderIcon />}</Typography>
+          <Typography variant="body1" gutterBottom></Typography>
+          <List dense>
+            <ListItemText primary={`SSN: ` + patient.ssn} />
+            <ListItemText primary={`Occupation: ` + patient.occupation} />
+          </List>
+          {patient.entries && <Typography variant="h5">Entries</Typography>}
+          <List dense>
+          {patient.entries?.map(e => (
+            <>
+              <ListItemText key={e.id} primary={e.date} secondary={e.description} />
+              {e.diagnosisCodes && (
+                <List style={{ marginTop: "0" }} dense sx={{ listStyleType: "disc", marginLeft: "1.5em" }}>
+                  {e.diagnosisCodes?.map(d => (
+                    <ListItemText style={{ marginTop: "0" }} key={d} primary={d} sx={{ display: "list-item" }} />
+                  ))}
+                </List>
+              )}
+              <Divider />
+            </>
+          ))}
+          </List>
         </>
       )}
-      {!patient && <p>Loading</p>}
+      {!patient && <Typography variant="body1" style={{ marginTop: "1em" }}>Loading</Typography>}
     </div>
   );
 };
