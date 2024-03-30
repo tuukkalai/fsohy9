@@ -48,10 +48,10 @@ const parseGender = (gender: unknown): Gender => {
 };
 
 const parseDiagnosisCodes = (object: unknown): Array<Diagnosis["code"]> => {
-  if (!object || typeof object !== "object" || !("diagnosisCodes" in object)) {
+  if (!object || typeof object !== "object") {
     return [] as Array<Diagnosis["code"]>;
   }
-  return object.diagnosisCodes as Array<Diagnosis["code"]>;
+  return object as Array<Diagnosis["code"]>;
 };
 
 const parseSickLeave = (sickLeave: unknown): SickLeave => {
@@ -132,6 +132,7 @@ export const toNewEntry = (object: unknown): EntryWithoutId => {
     "specialist" in object &&
     "type" in object
   ) {
+    console.log(object);
     const entry: BaseEntryWithoutId = {
       ...object,
       description: parseString(object.description),
