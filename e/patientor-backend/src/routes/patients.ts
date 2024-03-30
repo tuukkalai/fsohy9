@@ -1,15 +1,14 @@
-import express from 'express';
-import patientServices from '../services/patientServices';
-import toNewPatient from '../utils';
-
+import express from "express";
+import patientServices from "../services/patientServices";
+import { toNewPatient, toNewEntry } from "../utils";
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
+router.get("/", (_req, res) => {
   res.send(patientServices.getPatients());
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   const patient = patientServices.getPatient(req.params.id);
   if (patient) {
     res.send(patient);
@@ -18,12 +17,18 @@ router.get('/:id', (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const newPatient = toNewPatient(req.body);
   const addedPatient = patientServices.addPatient(newPatient);
 
   res.json(addedPatient);
+});
+
+router.post("/:id/entries", (req, res) => {
+  const entryIn = toNewEntry(req.body);
+  const newEntry = patientServices.addEntry(req.params.id, entryIn);
+  res.json(newEntry);
 });
 
 export default router;
