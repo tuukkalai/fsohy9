@@ -229,17 +229,18 @@ const PatientPage: React.FC = () => {
   const NewEntryModal = () => {
     const handleFormSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      const newEntry: EntryWithoutId = {
-        description,
-        date,
-        specialist,
-        diagnosisCodes,
-        type: "HealthCheck",
-        healthCheckRating,
-      };
-      console.log(newEntry);
-      const en = patientService.createEntry(newEntry);
-      console.log(en);
+      if (patient) {
+        const newEntry: EntryWithoutId = {
+          description,
+          date,
+          specialist,
+          diagnosisCodes,
+          type: "HealthCheck",
+          healthCheckRating,
+        };
+        const en = patientService.createEntry(patient, newEntry);
+        console.log(en);
+      }
     };
 
     return (
@@ -254,6 +255,7 @@ const PatientPage: React.FC = () => {
               name="description"
               label="Description"
               onChange={({ target }) => setDescription(target.value)}
+              value={description}
             />
             <TextField
               margin="normal"
@@ -262,6 +264,7 @@ const PatientPage: React.FC = () => {
               name="date"
               label="Date"
               onChange={({ target }) => setDate(target.value)}
+              value={date}
             />
             <TextField
               margin="normal"
@@ -270,22 +273,25 @@ const PatientPage: React.FC = () => {
               name="specialist"
               label="Specialist"
               onChange={({ target }) => setSpecialist(target.value)}
+              value={specialist}
             />
             <TextField
               margin="normal"
               variant="outlined"
-              id="diagnosiscodes"
-              name="diagnosiscodes"
+              id="diagnosisCodes"
+              name="diagnosisCodes"
               label="Diagnosis Codes"
               onChange={({ target }) => setDiagnosisCodes(target.value.split(","))}
+              value={diagnosisCodes}
             />
             <TextField
               margin="normal"
               variant="outlined"
-              id="healthcheckrating"
-              name="healthcheckrating"
+              id="healthCheckRating"
+              name="healthCheckRating"
               label="Health Check Rating"
               onChange={({ target }) => setHealthCheckRating(Number(target.value))}
+              value={healthCheckRating}
             />
           </FormControl>
           <ButtonGroup variant="contained">
