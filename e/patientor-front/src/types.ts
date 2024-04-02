@@ -70,3 +70,4 @@ type UnionOmit<T, K extends string | number | symbol> = T extends unknown
   : never;
 
 export type EntryWithoutId = UnionOmit<Entry, "id">;
+// export type EntryFormValues = UnionOmit<Entry, "id">;
