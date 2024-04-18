@@ -26,8 +26,9 @@ const createEntry = async (patient: Patient, object: EntryWithoutId) => {
     `${apiBaseUrl}/patients/${patient.id}/entries`,
     object
   );
-  console.log("new entry created?", data);
-  return data;
+  console.log("new entry created", data);
+  const newPatient = await getOne(patient.id);
+  return newPatient;
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

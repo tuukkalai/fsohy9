@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-import patientService from "../../services/patients";
 import diagnosisService from "../../services/diagnoses";
+import patientService from "../../services/patients";
 
 import { Diagnosis, Entry, EntryWithoutId, Gender, Patient } from "../../types";
 
 import HealthRatingBar from "../HealthRatingBar";
+import AddEntryForm from "./AddEntryForm";
 
-import MaleIcon from "@mui/icons-material/Male";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FemaleIcon from "@mui/icons-material/Female";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import MaleIcon from "@mui/icons-material/Male";
 import WorkIcon from "@mui/icons-material/Work";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import Add from "@mui/icons-material/Add";
 
 import {
   Button,
-  ButtonGroup,
   Card,
   CardContent,
-  FormControl,
   List,
   ListItemText,
-  TextField,
   Typography,
 } from "@mui/material";
 
@@ -32,11 +29,7 @@ const PatientPage: React.FC = () => {
   const [patient, setPatient] = useState<Patient>();
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [newEntryModal, setNewEntryModal] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [specialist, setSpecialist] = useState<string>("");
-  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
-  const [healthCheckRating, setHealthCheckRating] = useState<number>(-1);
+  const [error, setError] = useState<string>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -226,86 +219,32 @@ const PatientPage: React.FC = () => {
     }
   };
 
-  const NewEntryModal = () => {
-    const handleFormSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (patient) {
-        const newEntry: EntryWithoutId = {
-          description,
-          date,
-          specialist,
-          diagnosisCodes,
-          type: "HealthCheck",
-          healthCheckRating,
-        };
-        const en = patientService.createEntry(patient, newEntry);
-        console.log(en);
+  const submitNewEntry = async (patient: Patient, values: EntryWithoutId) => {
+    try {
+      const pat = await patientService.createEntry(patient, values);
+      setPatient(pat);
+      setNewEntryModal(false);
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        if (e?.response?.data && typeof e?.response?.data === "string") {
+          const message = e.response.data.replace("Something went wrong. Error: ", "");
+          console.error(message);
+          setError(message);
+        } else {
+          setError("Unrecognized axios error");
+        }
+      } else {
+        console.error("Unknown error", e);
+        setError("Unknown error");
       }
-    };
-
-    return (
-      <div style={{ border: "1px dashed #666", padding: "20px", margin: "10px 0" }}>
-        <Typography variant="h5">New HealthCheck entry</Typography>
-        <form onSubmit={handleFormSubmit}>
-          <FormControl margin="normal" fullWidth>
-            <TextField
-              margin="normal"
-              variant="outlined"
-              id="description"
-              name="description"
-              label="Description"
-              onChange={({ target }) => setDescription(target.value)}
-              value={description}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              id="date"
-              name="date"
-              label="Date"
-              onChange={({ target }) => setDate(target.value)}
-              value={date}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              id="specialist"
-              name="specialist"
-              label="Specialist"
-              onChange={({ target }) => setSpecialist(target.value)}
-              value={specialist}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              id="diagnosisCodes"
-              name="diagnosisCodes"
-              label="Diagnosis Codes"
-              onChange={({ target }) => setDiagnosisCodes(target.value.split(","))}
-              value={diagnosisCodes}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              id="healthCheckRating"
-              name="healthCheckRating"
-              label="Health Check Rating"
-              onChange={({ target }) => setHealthCheckRating(Number(target.value))}
-              value={healthCheckRating}
-            />
-          </FormControl>
-          <ButtonGroup variant="contained">
-            <Button type="submit" startIcon={<Add />} color="primary">
-              Add
-            </Button>
-            <Button color="error" onClick={() => console.log("Cancel pressed")}>
-              Cancel
-            </Button>
-          </ButtonGroup>
-        </form>
-      </div>
-    );
+    }
   };
+
+  const cancelSubmit = () => {
+    setNewEntryModal(false);
+    setError("");
+  }
+
 
   return (
     <div>
@@ -323,7 +262,7 @@ const PatientPage: React.FC = () => {
           <Button variant="contained" onClick={() => setNewEntryModal(!newEntryModal)}>
             Add new entry
           </Button>
-          {newEntryModal && <NewEntryModal />}
+          {newEntryModal && <AddEntryForm patient={patient} onSubmit={submitNewEntry} onCancel={cancelSubmit} error={error} />}
           {patient.entries?.length === 0 ? (
             <Typography variant="h5">No entries</Typography>
           ) : (
@@ -350,5 +289,5 @@ const PatientPage: React.FC = () => {
 export default PatientPage;
 
 function assertNever(entry: never): never {
-  throw new Error("Invalid entry detail.");
+  throw new Error(`Invalid entry detail: ${entry}`);
 }
