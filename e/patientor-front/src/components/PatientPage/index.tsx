@@ -16,14 +16,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MaleIcon from "@mui/icons-material/Male";
 import WorkIcon from "@mui/icons-material/Work";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  List,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CardContent, List, ListItemText, Typography } from "@mui/material";
 
 const PatientPage: React.FC = () => {
   const [patient, setPatient] = useState<Patient>();
@@ -33,7 +26,6 @@ const PatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    console.log("This one should run only when patient id changes");
     const getPatient = async () => {
       try {
         if (id) {
@@ -52,7 +44,6 @@ const PatientPage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log("This one should run only once");
     const fetchDiagnosesList = async () => {
       const diagnoses = await diagnosisService.getAll();
       setDiagnoses(diagnoses);
@@ -234,7 +225,6 @@ const PatientPage: React.FC = () => {
           setError("Unrecognized axios error");
         }
       } else {
-        console.error("Unknown error", e);
         setError("Unknown error");
       }
     }
@@ -243,8 +233,7 @@ const PatientPage: React.FC = () => {
   const cancelSubmit = () => {
     setNewEntryModal(false);
     setError("");
-  }
-
+  };
 
   return (
     <div>
@@ -262,7 +251,14 @@ const PatientPage: React.FC = () => {
           <Button variant="contained" onClick={() => setNewEntryModal(!newEntryModal)}>
             Add new entry
           </Button>
-          {newEntryModal && <AddEntryForm patient={patient} onSubmit={submitNewEntry} onCancel={cancelSubmit} error={error} />}
+          {newEntryModal && (
+            <AddEntryForm
+              patient={patient}
+              onSubmit={submitNewEntry}
+              onCancel={cancelSubmit}
+              error={error}
+            />
+          )}
           {patient.entries?.length === 0 ? (
             <Typography variant="h5">No entries</Typography>
           ) : (

@@ -26,15 +26,17 @@ router.post("/", (req, res) => {
 });
 
 router.post("/:id/entries", (req, res) => {
-  console.log("req.body");
-  console.log(req.body);
-  const entryIn = toNewEntry(req.body);
-  console.log("entryIn");
-  console.log(entryIn);
-  const newEntry = patientServices.addEntry(req.params.id, entryIn);
-  console.log("newEntry");
-  console.log(newEntry);
-  res.json(newEntry);
+  try {
+    const entryIn = toNewEntry(req.body);
+    const newEntry = patientServices.addEntry(req.params.id, entryIn);
+    res.json(newEntry);
+  } catch (e: unknown) {
+    let errorMsg = "Something went wrong.";
+    if (e instanceof Error) {
+      errorMsg += " Error: " + e.message;
+    }
+    res.status(500).send(errorMsg);
+  }
 });
 
 export default router;
