@@ -52,7 +52,6 @@ const PatientPage: React.FC = () => {
   }, []);
 
   const GenderIcon: React.FC = () => {
-    // TODO: Gender selection missing "Other"
     if (patient?.gender === Gender.Male) {
       return <MaleIcon />;
     }
@@ -254,6 +253,7 @@ const PatientPage: React.FC = () => {
           {newEntryModal && (
             <AddEntryForm
               patient={patient}
+              diagnosisCodes={diagnoses.map((d) => d.code)}
               onSubmit={submitNewEntry}
               onCancel={cancelSubmit}
               error={error}

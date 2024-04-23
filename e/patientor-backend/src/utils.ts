@@ -112,16 +112,6 @@ export const toNewPatient = ({
   return newPatient;
 };
 
-// type EntryFields = {
-//   description: unknown;
-//   date: unknown;
-//   specialist: unknown;
-//   type: unknown;
-//   diagnosisCodes: unknown;
-//   employerName?: unknown;
-//   sickLeave?: unknown;
-// };
-
 export const toNewEntry = (object: unknown): EntryWithoutId => {
   if (!object || typeof object !== "object") {
     throw new Error("Incorrect or missing data");
@@ -132,7 +122,6 @@ export const toNewEntry = (object: unknown): EntryWithoutId => {
     "specialist" in object &&
     "type" in object
   ) {
-    console.log(object);
     const entry: BaseEntryWithoutId = {
       ...object,
       description: parseString(object.description),

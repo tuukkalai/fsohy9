@@ -26,8 +26,11 @@ const createEntry = async (patient: Patient, object: EntryWithoutId) => {
     `${apiBaseUrl}/patients/${patient.id}/entries`,
     object
   );
-  console.log("new entry created", entry);
-  const newPatient = await getOne(patient.id);
+
+  const newPatient = {
+    ...patient,
+    entries: patient.entries ? patient.entries.concat(entry.data) : [entry.data],
+  };
   return newPatient;
 };
 
